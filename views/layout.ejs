@@ -1,3 +1,6 @@
+<!-- layout is th concept which help in same layout for all pages and 
+we can change content in it which is put in <%-body%> part in below code  -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,13 +9,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%=title%></title>
     <link rel="stylesheet" href="/css/layout.css">
+
+    <!-- <%- style %> this add here so that all links are in head tag  -->
     <%- style %>
 </head>
 <body>
+    <!-- adding add and footer from different file called as partials and these file are of -->
+    <!-- ejs type and saved in views folder -->
     <%- include('_header');%>
     <%-body%>
     <%- include('_footer');%>
 
+    <!-- <%- script %> this is used to move all file link at bottom of body tag -->
     <%- script %>
 </body>
 </html>

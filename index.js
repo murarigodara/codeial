@@ -1,16 +1,33 @@
 const express=require('express');
+const cookieParser=require('cookie-parser'); // cookie-parse libray used to edit cookie in server
 const app=express();
+
 const port=8000;
+
+// express. urlencoded() is a method inbuilt in express 
+// to recognize the incoming Request Object as strings or arrays. 
+// This method is called as a middleware in your application
+app.use(express.urlencoded());
+
+//call cookie-parser for use
+app.use(cookieParser());
+//require layout library
 const expresslayouts=require('express-ejs-layouts');
 
+//adding darabase to it
+const db=require('./config/mongoose');
 
+
+//add static files to server
 app.use(express.static('./assets'));
 
 //we use layouts before routes because routes can use layouts 
 app.use(expresslayouts);
+
 //we exract style and script from sub pages into layouts 
 app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);
+
 //use express route
 app.use('/',require('./routes'));
 
