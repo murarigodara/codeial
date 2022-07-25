@@ -7,10 +7,16 @@ module.exports.profile=function(req,res){
 
 //render the sign up data and page
 module.exports.signUp=function(req,res){
+   if(req.isAuthenticated()){
+      return res.redirect('/users/profile');
+   }
    res.render('user_sign_up',{title:"SignUp"});
 }
 //render the sign in page
 module.exports.signIn=function(req,res){
+   if(req.isAuthenticated()){
+      return res.redirect('/users/profile');
+   }
    res.render('user_sign_in',{title:"signin"});
 }
 //get data and  create users
@@ -34,6 +40,16 @@ module.exports.create=function(req,res){
 };
 //get sign in data and create session
 module.exports.createSession=function(req,res){
-   console.log(req.body);
-   res.end("user is logined In");
+   return res.redirect('/');
 };
+//signout and destroy session
+module.exports.destroySession=function(req,res){
+   req.logout(function(err){
+      if(err){
+         console.log("error in logout");
+         return;
+      }
+      return res.redirect('/');
+   });
+   
+}
