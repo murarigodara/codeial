@@ -1,0 +1,17 @@
+header {
+  height: 40px;
+  background-color: #32aed7;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+  header h1 {
+    margin-left: 10px; }
+  header div li {
+    list-style: none;
+    display: inline;
+    margin-right: 10px; }
+    header div li a {
+      color: white;
+      text-decoration: none;
+      font-size: 22px; }

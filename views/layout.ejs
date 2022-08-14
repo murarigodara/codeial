@@ -3,24 +3,32 @@ we can change content in it which is put in <%-body%> part in below code  -->
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%=title%></title>
+    <title>
+        <%=title%>
+    </title>
     <link rel="stylesheet" href="/css/layout.css">
-
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <!-- <%- style %> this add here so that all links are in head tag  -->
     <%- style %>
 </head>
+
 <body>
     <!-- adding add and footer from different file called as partials and these file are of -->
     <!-- ejs type and saved in views folder -->
     <%- include('_header');%>
-    <%-body%>
-    <%- include('_footer');%>
-
-    <!-- <%- script %> this is used to move all file link at bottom of body tag -->
-    <%- script %>
+        <main id="layout-main">
+            <%-body%>
+        </main>
+        <%- include('_footer');%>
+            <!-- <%- script %> this is used to move all file link at bottom of body tag -->
+        <%- script %>
 </body>
+
 </html>

@@ -1,0 +1,19 @@
+footer {
+  color: white;
+  display: flex;
+  justify-items: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: gray;
+  margin-bottom: 0%; }
+  footer p {
+    margin-left: 10px; }
+  footer div {
+    display: flex;
+    flex-direction: column; }
+    footer div li {
+      list-style: none;
+      margin-left: 10px; }
+      footer div li a {
+        text-decoration: none;
+        color: white; }

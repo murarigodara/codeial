@@ -1,0 +1,24 @@
+footer{
+    color: white;
+    display: flex;
+    justify-items: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: gray;
+    margin-bottom: 0%;
+    p{
+        margin-left: 10px;
+    }
+    div{
+        display: flex;
+        flex-direction: column;
+        li{
+            list-style: none;
+            margin-left: 10px;
+            a{
+                text-decoration: none;
+                color: white;
+            }
+        }
+    }
+}

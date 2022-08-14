@@ -1,20 +1,10 @@
 const express=require('express');
 const cookieParser=require('cookie-parser'); // cookie-parse libray used to edit cookie in server
+//require layout library
+const expresslayouts=require('express-ejs-layouts');
 const app=express();
 
 const port=8000;
-
-
-// express. urlencoded() is a method inbuilt in express 
-// to recognize the incoming Request Object as strings or arrays. 
-// This method is called as a middleware in your application
-app.use(express.urlencoded());
-
-//call cookie-parser for use
-app.use(cookieParser());
-//require layout library
-const expresslayouts=require('express-ejs-layouts');
-
 //adding darabase to it
 const db=require('./config/mongoose');
 
@@ -25,6 +15,25 @@ const passportLocal=require('./config/passport-local-strategy');
 
 const { Mongoose } = require('mongoose');
 const MongoStore=require('connect-mongo')(session);
+//sass middleware 
+const sassMiddleware=require('node-sass-middleware');
+//we put the sass middelware just before the app start becuase we want all file to be complied before server start
+app.use(sassMiddleware({
+    src:'./assets/scss',
+    dest:'./assets/css',
+    debug:true,
+    outputStyle:'extended',
+    prefix:'/css'
+}))
+// express. urlencoded() is a method inbuilt in express 
+// to recognize the incoming Request Object as strings or arrays. 
+// This method is called as a middleware in your application
+app.use(express.urlencoded());
+
+//call cookie-parser for use
+app.use(cookieParser());
+
+
 //add static files to server
 app.use(express.static('./assets'));
 
