@@ -6,10 +6,13 @@ content:{
     required:true
 },
 user:{
-    type:mongoose.Types.Schema.ObjectId,
-    ref:'user'
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'User'
 }
 },{
     timeStamps:true
 }
 );
+const Post=mongoose.model('Post',postSchema);
+
+module.exports=Post;
