@@ -5,7 +5,7 @@ const passport=require('../config/passport-local-strategy');
 console.log('router is loaded');
 router.get('/',homeController.home);
 router.use('/users',require('./users'));
-router.use('/posts',passport.checkAuthentication,require('./post'));
-
+router.use('/posts',require('./post'));
+router.use('/comments',require('./comments'));
 
 module.exports=router;

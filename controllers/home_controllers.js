@@ -11,7 +11,15 @@ module.exports.home=function(req,res){
     
     
     //populate user
-    post.find({}).populate('user').exec(function(error,posts){
+    post.find({})
+    .populate('user')
+    .populate({
+        path:'comments',
+        populate:{
+            path:'user'
+        }
+    })
+    .exec(function(error,posts){
         return res.render('home',{title:"codial home",posts:posts});
     })
     
