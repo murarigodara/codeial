@@ -19,6 +19,11 @@
                                     </small>
                             </p>
                             <div class="post-comment">
+                                <%if(locals.user && locals.user.id==post.user.id){ %>
+                                <small>
+                                    <a href="/posts/destroy/<%=post.id%>">X</a>
+                                </small>
+                                <%}%>
                                 <%if(locals.user){%>
                                     <form action="/comments/create" method="Post">
                                         <input type="text" name="content" placeholder="type here to add comment...">
@@ -31,6 +36,11 @@
                                         <%for(comment of post.comments){%>
                                             <li>
                                                 <p>
+                                                    <%if(locals.user && locals.user.id==comment.user.id){ %>
+                                                        <small>
+                                                            <a href="/comments/destroy/<%=comment.id%>">X</a>
+                                                        </small>
+                                                        <%}%>
                                                     <%=comment.content%>
                                                     <small><%=comment.user.name%></small>
                                                 </p>

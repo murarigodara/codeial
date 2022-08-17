@@ -23,3 +23,29 @@ module.exports.create=function(req,res){
     });
 
 };
+
+module.exports.destroy=function(req,res){
+    
+    Comment.findById(req.params.id,function(error,comment){
+        if(comment.user==req.user.id){
+            const postid=comment.post;
+            comment.remove();
+
+            //alernative for delete comment
+            // Post.findByIdAndUpdate(postid,{$pull:{comments:req.params.id}},function(error,post){
+            //     return res.redirect('back');
+            // });
+
+            Post.findById(postid,function(error,post){
+                if(post){
+                    post.comments.splice(post.comments.indexOf(postid),1);
+                    return res.redirect('back');
+                }
+               
+            });
+        } else{
+            return res.redirect('back');
+        }
+        
+    });
+};
