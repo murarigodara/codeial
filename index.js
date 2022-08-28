@@ -17,6 +17,8 @@ const { Mongoose } = require('mongoose');
 const MongoStore=require('connect-mongo')(session);
 //sass middleware 
 const sassMiddleware=require('node-sass-middleware');
+const flash=require('connect-flash');
+const custMware=require('./config/middleware');
 //we put the sass middelware just before the app start becuase we want all file to be complied before server start
 app.use(sassMiddleware({
     src:'./assets/scss',
@@ -72,6 +74,9 @@ app.use(session(
 app.use(passport.initialize());
 app.use(passport.session());
 
+//should be used after session because its uses the session cookies
+app.use(flash());
+app.use(custMware.setFlash);
 // setup  the view engine
 app.set('view engine','ejs');
 app.set('views','./views');

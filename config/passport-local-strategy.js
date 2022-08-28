@@ -7,21 +7,22 @@ const User=require('../models/user');
 //config passport for authentication
 // tell passport to use this strategy
 passport.use(new LoaclStretegy({
-    usernameField:'email'
+    usernameField:'email',
+    passReqToCallback:true
     },
-    function(email,password,done){
+    function(req,email,password,done){
         User.findOne({email:email},function(err,user){
             if(err){
-                console.log('error in finding user -->Passport');
+                req.flash('error',err);
                 return done(err);
             }
             if(!user || user.password!=password)
             {
-                console.log('Wrong username/password');
+                req.flash('error','Invalid User/Password');
                 return done(null,false);
             }
             return done(null,user);
-        })
+        });
     }
 ))
 //actually express session libray is storing this encrypted key in cookies 

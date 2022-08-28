@@ -7,6 +7,9 @@ header {
   align-items: center; }
   header h1 {
     margin-left: 10px; }
+    header h1 a {
+      text-decoration: none;
+      color: white; }
   header div li {
     list-style: none;
     display: inline;

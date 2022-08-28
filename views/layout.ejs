@@ -11,6 +11,8 @@ we can change content in it which is put in <%-body%> part in below code  -->
     <title>
         <%=title%>
     </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
     <link rel="stylesheet" href="/css/layout.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/footer.css">
@@ -23,12 +25,35 @@ we can change content in it which is put in <%-body%> part in below code  -->
     <!-- adding add and footer from different file called as partials and these file are of -->
     <!-- ejs type and saved in views folder -->
     <%- include('_header');%>
+    
+    
         <main id="layout-main">
             <%-body%>
         </main>
         <%- include('_footer');%>
             <!-- <%- script %> this is used to move all file link at bottom of body tag -->
-        <%- script %>
+            <%- script %>
+            <script>
+                <% if(flash.success && flash.success.length>0){ %>
+                    new Noty({
+                    theme:'relax',
+                    text: '<%=flash.success%>',
+                    type:'success',
+                    layout:'topRight',
+                    timeout:1500
+                    }).show();
+                <%}%>
+                <% if(flash.error && flash.error.length>0){ %>
+                    new Noty({
+                    theme:'metroui',
+                    text: '<%=flash.error%>',
+                    type:'warning',
+                    layout:'topRight',
+                    timeout:1500
+                    }).show();
+                <%}%>
+            
+            </script>
 </body>
 
 </html>
