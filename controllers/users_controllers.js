@@ -1,6 +1,8 @@
 const { render } = require("ejs");
 const { model } = require("mongoose");
 const User=require('../models/user');
+const fs=require('fs');
+const path=require('path');
 module.exports.profile=function(req,res){
    User.findById(req.params.id,function(error,user){
       return res.render('user_profile',{title:'users',profile_user:user});
@@ -8,13 +10,40 @@ module.exports.profile=function(req,res){
    
 };
 //upadte user
-module.exports.update=function(req,res){
+module.exports.update=async function(req,res){
+   // if(req.params.id==req.user.id){
+   //    User.findByIdAndUpdate(req.params.id,req.body,function(error,user){
+   //       return res.redirect('back');
+   //    });
+   // }
+   // else{
+   //    return res.satus('404').send('Unauthorized');
+   // }
    if(req.params.id==req.user.id){
-      User.findByIdAndUpdate(req.params.id,req.body,function(error,user){
-         return res.redirect('back');
-      });
+      try{
+         let user=await User.findByIdAndUpdate(req.params.id);
+         User.uploadedAvatar(req,res,function(error){
+            if(error){console.log("***Multer"+error);}
+            user.name=req.body.name;
+            user.email=req.body.email;
+            if(req.file){
+               //this is saving the the path of file in avatar filed in the user
+               if(user.avatar && fs.existsSync(path.join(__dirname,'..',user.avatar)) ){
+                 fs.unlinkSync(path.join(__dirname,'..',user.avatar)); 
+               }
+               user.avatar=User.avatarPath+'/'+req.file.filename;
+               user.save();
+            }
+            return res.redirect('back');
+         });
+      }
+      catch(error){
+         req.flash('error',error);
+      return res.redirect('back');
+      }
    }
    else{
+      req.flash('error','Unauthorized');
       return res.satus('404').send('Unauthorized');
    }
 };

@@ -14,7 +14,7 @@
                 data: newPostForm.serialize(),
                 success: function(data){
                     let newPost = newPostDom(data.data.post);
-                    $('#post-list-container>ul').prepend(newPost);
+                    $(' #post-list-container>ul').prepend(newPost);
                     deletePost($(' .delete-post-button', newPost));
 
                     // call the create comment class
@@ -99,7 +99,7 @@
      // loop over all the existing posts on the page (when the window loads for the first time) and call the delete post method on delete link of each, also add AJAX (using the class we've created) to the delete button of each
      let convertPostsToAjax = function(){
         console.log("inside covert")
-        $(`#posts-list-container>ul>li`).each(function(){
+        $("#posts-list-container>ul").each(function(){
             console.log($(this));
             let self = $(this);
             let deleteButton = $(' .delete-post-button', self);

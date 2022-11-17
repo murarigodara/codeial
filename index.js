@@ -1,7 +1,7 @@
 const express=require('express');
 const cookieParser=require('cookie-parser'); // cookie-parse libray used to edit cookie in server
 //require layout library
-const expresslayouts=require('express-ejs-layouts');
+const expressLayouts = require('express-ejs-layouts');
 const app=express();
 
 const port=8000;
@@ -12,7 +12,7 @@ const db=require('./config/mongoose');
 const session=require('express-session');
 const passport=require('passport');
 const passportLocal=require('./config/passport-local-strategy');
-
+const passportJWT = require('./config/passport-jwt-strategy');
 const { Mongoose } = require('mongoose');
 const MongoStore=require('connect-mongo')(session);
 //sass middleware 
@@ -38,9 +38,10 @@ app.use(cookieParser());
 
 //add static files to server
 app.use(express.static('./assets'));
-
+// make upload path avialabe to browser
+app.use('/uploads',express.static(__dirname+'/uploads'));
 //we use layouts before routes because routes can use layouts 
-app.use(expresslayouts);
+app.use(expressLayouts);
 
 //we exract style and script from sub pages into layouts 
 app.set('layout extractStyles',true);

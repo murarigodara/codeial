@@ -1,26 +1,43 @@
-const mongoose=require('mongoose');
-const userSchema=new mongoose.Schema({
-    email:{
-        type:String,
+const mongoose = require('mongoose');
+const path = require('path');
+const multer = require('multer');
+const AVATAR_PATH = path.join('/uploads/users/avatars');
+const userSchema = new mongoose.Schema({
+    email: {
+        type: String,
         required: true,
-        unique:true
+        unique: true
     },
-    password:{
-        type:String,
-        required:true
+    password: {
+        type: String,
+        required: true
 
     },
-    name:{
-        type:String,
-        required:true
+    name: {
+        type: String,
+        required: true
+    },
+    avatar:{
+        type: String
     }
-},{
-    timestamps:true
+}, {
+    timestamps: true
 }
-    );
+);
 
+let storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join(__dirname,"..",AVATAR_PATH));
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now());
+    }
+});
+// statics methods
+userSchema.statics.uploadedAvatar=multer({ storage: storage }).single('avatar');
+userSchema.statics.avatarPath=AVATAR_PATH;
 // register schema with mongoose
 // first parameter is model name and second parameter is schema defintion 
-const User=mongoose.model('User',userSchema);
+const User = mongoose.model('User', userSchema);
 
-module.exports=User;
+module.exports = User;
